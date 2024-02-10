@@ -1,12 +1,12 @@
 const express = require("express")
 const {uploadMiddleware} = require("../middlewares/fileUpload");
-const {MediaModel, PostModel} = require("../../models/post.models")
+const {LikeModel} = require("../../models/like.model")
 const base_url = "http://localhost:6420/"
 const postRouter = express.Router();
 const {auth} = require("../middlewares/auth")
 
 // CREATE POST
-postRouter.post("/create_post", auth,uploadMiddleware, async(req,res)=>{
+like.post("/create_post", auth,uploadMiddleware, async(req,res)=>{
    
   try{
     const files = req.files;
