@@ -29,7 +29,7 @@ postRouter.post("/create_post", auth,uploadMiddleware, async(req,res)=>{
 })
 
 // GET ALL POSTS
-postRouter.get("/all_post",auth, async(req,res)=>{
+postRouter.get("/all_post", async(req,res)=>{
   try{
     const posts = await PostModel.find({});
     res.status(200).json({msg:"All Post", data:posts})
