@@ -21,6 +21,12 @@ const userSchema = new mongoose.Schema(
     provider: {
       type: String,
     },
+    password:{
+      type: String
+    },
+    phone:{
+      type: Number
+    },
     // facebookId: {
     //   type: String,
     // },
@@ -28,8 +34,10 @@ const userSchema = new mongoose.Schema(
     //   type: String,
     // },
   },
+  
   {
     timestamps: true,
+    versionKey: false
   }
 );
 

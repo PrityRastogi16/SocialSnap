@@ -28,15 +28,15 @@ const app = express();
 const session = require('express-session');
 const {connection}=require('./db');
 const facebookRouter = require('./controllers/routes/facebook.route');
-
+const {userRouter} = require('./controllers/routes/manualLogin.route');
 const passport = require('passport');
 
-
+app.use(express.json())
 require('dotenv').config();
 
 app.set('view engine', 'ejs');
 
-
+app.use('/users', userRouter);
 
 app.use(
   session({
