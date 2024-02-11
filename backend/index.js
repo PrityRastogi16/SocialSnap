@@ -37,18 +37,25 @@ const {likeRouter} = require("./controllers/routes/like.routes")
 const passport = require('passport');
 
 
-const app = express()
+// const app = express()
 app.use(cors())
 app.use(express.json());
 app.use('/posts', postRouter)
 app.use('/like',likeRouter)
 
 
+// const app = express()
+// app.use(cors())
+// app.use(express.json());
+// app.use('/posts', postRouter)
+// app.use('/like',likeRouter)
+
+app.use(express.json())
 require('dotenv').config();
 
 app.set('view engine', 'ejs');
 
-
+app.use('/users', userRouter);
 
 app.use(
   session({
