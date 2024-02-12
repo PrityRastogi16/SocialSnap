@@ -12,17 +12,23 @@ passport.use(
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_SECRET_KEY,
       callbackURL: process.env.FACEBOOK_CALLBACK_URL,
+      profileFields: ['id', 'displayName', 'email', 'first_name', 'last_name', 'picture.type(large)'],
     },
     async function (accessToken, refreshToken, profile, cb) {
+      console.log(accessToken)
+      console.log(refreshToken)
       const user = await User.findOne({
         accountId: profile.id,
         provider: 'facebook',
       });
       if (!user) {
         console.log('Adding new facebook user to DB..');
+        let defaultimage = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png"; 
         const user = new User({
           accountId: profile.id,
           name: profile.displayName,
+          email: profile.emails ? profile.emails[0].value : null,
+          photoURL: profile.photos ? profile.photos[0].value : defaultimage,
           provider: profile.provider,
         });
         await user.save();
@@ -51,6 +57,7 @@ router.get(
 );
 
 router.get('/success', async (req, res) => {
+  // console.log(data)
   const userInfo = {
     
     id: req.session.passport.user.id,
