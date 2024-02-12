@@ -5,6 +5,7 @@ const util = require("util")
 const storage = multer.diskStorage({
     destination: 'uploads',
     filename: function (req,file,cb){
+        console.log(req.body.user_id)
         cb(null, file.fieldname+'-'+Date.now()+path.extname(file.originalname));
     }
 })
@@ -35,6 +36,6 @@ const upload = multer({
 // } 
 const uploadMiddleware = util.promisify(upload)
 
-module.exports={
+module.exports = {
  uploadMiddleware
 }
