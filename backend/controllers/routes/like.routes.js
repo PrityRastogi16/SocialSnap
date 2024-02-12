@@ -7,15 +7,25 @@ const {auth} = require("../middlewares/auth")
 
 // CREATE POST
 likeRouter.post("/like", async(req,res)=>{
-   const {post_id} = req.body
-   const existingLike = await LikeModel.findOne({post_id});
-   return 
+  const {post_id,user_id} = req.body
+  const existingLike = await LikeModel.findOne({post_id, user_id});
   try{
-     console.log("Gooodddd")
-    res.status(200).json({msg:"Post Created"})
+   if(!existingLike){
+    await LikeModel.create(req.body);
+    await PostModel.findByIdAndUpdate(
+      post_id,{$inc:{likeCount:1}},{new:true}
+    )
+    return res.status(200).json({msg:"Like added successfully"})
+   }else{
+    await LikeModel.findByIdAndRemove(existingLike._id);
+    await PostModel.findByIdAndUpdate(
+      post_id,{$inc:{likeCount:-1}},{new:true}
+    )
+    return res.status(200).json({msg:"Like removed successfully"})
+   }
   }
   catch(err){
-    res.status(400).json({msg:"Uploading failed!"})
+    res.status(400).json({msg:"No like"})
   }
 })
 

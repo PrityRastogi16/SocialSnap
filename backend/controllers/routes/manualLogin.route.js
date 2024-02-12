@@ -156,12 +156,12 @@ userRouter.post("/login", async (req, res) => {
         if (result) {
           const access_token = jwt.sign(
             { userID: user._id, username: user.username },
-            "shraddha",
+            "SocialSnap",
             { expiresIn: "7d" }
           );
           const refresh_token = jwt.sign(
             { userID: user._id, username: user.username },
-            "shraddha",
+            "SocialSnap",
             { expiresIn: "14d" }
           );
 

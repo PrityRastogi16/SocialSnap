@@ -6,7 +6,7 @@ const postRouter = express.Router();
 const {auth} = require("../middlewares/auth")
 
 // CREATE POST
-postRouter.post("/create_post", auth,uploadMiddleware, async(req,res)=>{
+postRouter.post("/create_post/:userID", auth,uploadMiddleware, async(req,res)=>{
    
   try{
     const files = req.files;
@@ -19,11 +19,13 @@ postRouter.post("/create_post", auth,uploadMiddleware, async(req,res)=>{
     req.body.media = media;
     
     console.log("Fine")
-    console.log(req.body);
+    console.log(req.body.user_id);
+    req.body.user_id= req.params.userID
    const post = await PostModel.create(req.body)
     res.status(200).json({msg:"Post Created", data:post})
   }
   catch(err){
+    console.log(err);
     res.status(400).json({msg:"Uploading failed!"})
   }
 })

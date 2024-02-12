@@ -2,19 +2,23 @@ const jwt = require('jsonwebtoken');
 require("dotenv").config();
 
 const auth = async(req,res,next)=>{
-    const token = !!req?.headers["authorization"] ? req?.headers["authorization"].split(' ')[1] : null
-    console.log("req header", token);
+    const token = req.headers.authorization?.split(" ")[1];
+    console.log("token", token);
     if(!token){
         return res.status(400).send("You are not authorised")
     }
      try{
-       const decoded = jwt.verify(token, process.env.TOKEN_KEY)
+       const decoded = jwt.verify(token, process.env.SESSION_SECRET)
        req.user = decoded;
+       req.body.user_id = decoded.userID;
+       console.log(req.body.user_id)
+       req.body.user = decoded.user;
+       next() 
      }
      catch(error){
         return res.status(400).send("Invalid Token")
      }
-    next() 
+   
 }
 
 module.exports = {
