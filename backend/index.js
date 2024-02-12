@@ -16,6 +16,7 @@ const {connection}=require('./db');
 const facebookRouter = require('./controllers/routes/facebook.route');
 const {postRouter} = require("./controllers/routes/post.routes")
 const {likeRouter} = require("./controllers/routes/like.routes")
+const {userRouter} = require("./controllers/routes/manualLogin.route")
 const PORT=process.env.PORT;
 
 app.use(cors())
