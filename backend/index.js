@@ -3,7 +3,7 @@ const http=require('http');
 const socketIo=require('socket.io');
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+
 require('dotenv').config();
 const session = require('express-session');
 const passport = require('passport');
@@ -64,12 +64,41 @@ app.get('/chat',(req,res)=>{
   res.sendFile(join(__dirname,'../frontend/views/client.html'))
 })
 
-io.on('connection',(socket)=>{
-  console.log('a user is connected')
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-})
+
+const io = require('socket.io')(server, {
+  cors: {
+      origin: ['http://127.0.0.1:5500','http://localhost:6420'],
+      methods: ['GET', 'POST'],
+      credentials: true
+  },
+});
+
+
+io.on('connection', onConnected);
+
+let socketsConnected = new Set();
+
+function onConnected(socket) {
+    console.log(socket.id);
+    socketsConnected.add(socket.id);
+
+    io.emit('clients-total', socketsConnected.size);
+
+    socket.on('disconnect', () => {
+        console.log('Socket disconnected', socket.id);
+        socketsConnected.delete(socket.id);
+        io.emit('clients-total', socketsConnected.size);
+    });
+
+    socket.on('message', (data) => {
+        console.log(data);
+        socket.broadcast.emit('chat-mesg', data);
+    });
+
+    socket.on('feedback', (data) => {
+        socket.broadcast.emit('feedback', data);
+    });
+}
 
 
 
