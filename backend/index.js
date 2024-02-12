@@ -22,6 +22,7 @@ const PORT=process.env.PORT;
 
 
 
+
 app.use(cors())
 app.use(express.json());
 
@@ -29,7 +30,17 @@ app.use('/posts', postRouter)
 app.use('/like',likeRouter)
 
 
+
 app.set('view engine', 'ejs');
+
+
+app.use(express.json())
+require('dotenv').config();
+
+
+
+app.use('/users', userRouter);
+
 app.use(
   session({
     resave: false,
