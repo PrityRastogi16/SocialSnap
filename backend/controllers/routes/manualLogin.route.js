@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const User = require("../../models/user.model");
 const cookieparser = require("cookie-parser");
 
-const {generateOtp,sendEmailVerification}=require('../../controllers/middlewares/otpRegistration.middleware');
+const {generateOtp,sendEmailVerification, sendSMSVerification}=require('../../controllers/middlewares/otpRegistration.middleware');
 const {redisClient}=require('../../controllers/middlewares/redis.middleware');
 
 const userRouter = express.Router();
@@ -44,9 +44,6 @@ userRouter.post("/register", async (req, res) => {
           return res.status(400).json({ msg: "Email already exists" });
         }
 
-        // const otp = generateOtp();
-        // await redisClient.setex(email,120,otp.toString());
-        // sendEmailVerification(email, otp);
         const storedOTP = await redisClient.get(email);
         if(storedOTP && storedOTP === otp){
             const hashedPassword = await bcrypt.hash(password, 10);
@@ -71,14 +68,27 @@ userRouter.post("/register", async (req, res) => {
         }
 
         // You might want to send an OTP to the phone number and verify it here.
+        const storedOTP = await redisClient.get(phone);
+        if(storedOTP && storedOTP === otp){
+          const hashedPassword = await bcrypt.hash(password, 10);
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const user = new User({ name, phone, password: hashedPassword });
-        await user.save();
+          const user = new User({ name, phone, password: hashedPassword });
+          await user.save();
         res
           .status(200)
           .json({ msg: "User registered successfully", registeredUser: user });
+            // res.status(200).json({msg:"Otp verified"});
+        }else{
+            console.log(storedOTP," ",otp);
+            res.status(400).json({error:"Invalid or expired OTP.Please request a new otp"})
+        }
+        // const hashedPassword = await bcrypt.hash(password, 10);
+
+        // const user = new User({ name, phone, password: hashedPassword });
+        // await user.save();
+        // res
+        //   .status(200)
+        //   .json({ msg: "User registered successfully", registeredUser: user });
       }
     }
   } catch (err) {
@@ -105,13 +115,21 @@ userRouter.post('/send-otp',async(req,res)=>{
 
             }
         }else{
-            res.status(401).json({err:"User not found...Register User"})
+          const phone = emailorphone;
+      
+          if (phone) {
+            const existEmailUser = await User.findOne({ phone });
+            if (existEmailUser) {
+              return res.status(400).json({ msg: "phone already exists" });
+            }
+              await redisClient.setex(phone,120,otp.toString());
+              sendSMSVerification(phone,otp);
+              res.status(200).json({msg:"OTP sent successfully"});
+          }
         }
     }catch(err){
         res.status(500).json(err)
     }
-    
-   
 })
 // userRouter.post('/verify-otp',async(req,res)=>{
 //     const {email,otp}=req.body;
