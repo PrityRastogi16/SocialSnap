@@ -1,28 +1,3 @@
-// const express = require('express');
-// const {connection}=require('./db');
-
-// const cors = require("cors")
-
-// const app = express()
-// app.use(cors())
-// app.use(express.json());
-
-
-// app.get('/',(req,res)=>{
-//     res.send("This is Home")
-// })
-     
-// app.listen(6420,async()=>{
-//     try{
-//          await connection
-//          console.log("connected to db")
-//          console.log("server is running at port 8080");
-//     }catch(err){
-//         console.log(err);
-//     }
-    
-// })
-
 const express = require('express');
 const app = express();
 const session = require('express-session');
@@ -36,9 +11,7 @@ const {likeRouter} = require("./controllers/routes/like.routes")
 
 const passport = require('passport');
 
-
-const app = express()
-app.use(cors())
+// app.use(cors())
 app.use(express.json());
 app.use('/posts', postRouter)
 app.use('/like',likeRouter)
@@ -47,7 +20,6 @@ app.use('/like',likeRouter)
 require('dotenv').config();
 
 app.set('view engine', 'ejs');
-
 
 
 app.use(
