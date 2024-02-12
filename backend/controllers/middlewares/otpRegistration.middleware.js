@@ -1,6 +1,19 @@
 const nodemailer = require('nodemailer');
+const twilio = require('twilio');
 require('dotenv').config();
 
+const twilioClient = new twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
+function sendSMSVerification(phone, otp) {
+
+  twilioClient.messages.create({
+      body: `Your OTP for phone number verification is: ${otp}`,
+      to: phone,
+      from: '+917038536555',
+  })
+  .then(message => console.log(message.sid))
+  .catch(error => console.error(error));
+}
 const transporter = nodemailer.createTransport({
  service:'gmail',
   auth: {
@@ -44,4 +57,5 @@ const sendEmailVerification = async (email,otp) => {
 module.exports = {
   generateOtp,
   sendEmailVerification,
+  sendSMSVerification
 };
