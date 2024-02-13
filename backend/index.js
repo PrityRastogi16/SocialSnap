@@ -14,6 +14,7 @@ const {join}=require('path');
 
 const {connection}=require('./db');
 const facebookRouter = require('./controllers/routes/facebook.route');
+const googleRouter = require('./controllers/routes/google.route');
 const {postRouter} = require("./controllers/routes/post.routes")
 const {likeRouter} = require("./controllers/routes/like.routes")
 const {userRouter} = require("./controllers/routes/manualLogin.route")
@@ -57,6 +58,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth/facebook', facebookRouter);
+
+app.use('/auth/google', googleRouter);
 
 
 // aditi's code
