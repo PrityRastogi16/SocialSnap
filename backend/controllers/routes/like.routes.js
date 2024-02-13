@@ -30,15 +30,19 @@ likeRouter.post("/like", async(req,res)=>{
 })
 
 // GET ALL POSTS
-// likeRouter.get("/all_post",auth, async(req,res)=>{
-//   try{
-//     const posts = await PostModel.find({});
-//     res.status(200).json({msg:"All Post", data:posts})
-//   }
-//   catch(err){
-//     res.status(400).json({msg:"Failed to load posts !"})
-//   }
-// })
+likeRouter.get("/all_post", async(req,res)=>{
+  const {post_id} = req.query
+  try{
+    const posts = await PostModel.find({post_id:post_id}).populate({path:"user_id", select:"name"})
+    
+    res.status(200).json({msg:"All Post", data:posts})
+  }
+  catch(err){
+    console.log(err);
+    res.status(400).json({msg:"Failed to load posts !"})
+    
+  }
+})
 
 // DELETE POST
 

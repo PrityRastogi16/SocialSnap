@@ -8,7 +8,7 @@ const mediaSchema = new mongoose.Schema({
 const postSchema = new mongoose.Schema({
      media: [mediaSchema],
      description: {type:String},
-     user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+     user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
      likeCount: {type:Number, default:0},
      commentCount: {type:Number, default:0},
 },{timestamps:true})
