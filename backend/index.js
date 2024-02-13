@@ -18,6 +18,7 @@ const googleRouter = require('./controllers/routes/google.route');
 const {postRouter} = require("./controllers/routes/post.routes")
 const {likeRouter} = require("./controllers/routes/like.routes")
 const {userRouter} = require("./controllers/routes/manualLogin.route")
+const {commentRouter} = require("./controllers/routes/comment.routes")
 const PORT=process.env.PORT;
 
 app.use(cors())
@@ -26,7 +27,7 @@ app.use(express.json());
 
 app.use('/posts', postRouter)
 app.use('/like',likeRouter)
-
+app.use('/comment',commentRouter);
 
 
 app.set('view engine', 'ejs');

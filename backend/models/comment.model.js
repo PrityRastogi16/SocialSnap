@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
 const {ObjectId} = mongoose.Schema.Types
 
-const likeSchema = new mongoose.Schema({
+const commentSchema = new mongoose.Schema({
      user_id: {type:ObjectId, required : true, ref:'User'},
      post_id: {type:ObjectId, required:true, ref: 'post'},
+     comment: {type:String, required:true}
 },{timestamps:true})
 
 
-const LikeModel = mongoose.model('like', likeSchema);
+const CommentModel = mongoose.model('comment', commentSchema);
 
 module.exports = {
-LikeModel
+CommentModel
 }
