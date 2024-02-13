@@ -1,7 +1,6 @@
 const express = require("express")
 const {CommentModel} = require("../../models/comment.model")
 const {PostModel} = require("../../models/post.models")
-const base_url = "http://localhost:6420/"
 const commentRouter = express.Router();
 const {auth} = require("../middlewares/auth")
 
@@ -21,6 +20,7 @@ commentRouter.post("/add_comment",auth, async(req,res)=>{
   }
 })
 
+
 // GET ALL POSTS
 commentRouter.get("/postcomment", async(req,res)=>{
   const {post_id} = req.query
@@ -36,6 +36,8 @@ commentRouter.get("/postcomment", async(req,res)=>{
   }
 })
 
+
+// DELETE POST
 commentRouter.get("/delete_comment",auth, async(req,res)=>{
     const {comment_id, user_id} = req.body
     try{
@@ -57,7 +59,7 @@ commentRouter.get("/delete_comment",auth, async(req,res)=>{
     }
   })
 
-// DELETE POST
+
 
 module.exports = {
     commentRouter
