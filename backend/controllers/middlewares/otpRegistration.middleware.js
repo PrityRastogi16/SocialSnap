@@ -8,7 +8,7 @@ function sendSMSVerification(phone, otp) {
 
   twilioClient.messages.create({
       body: `Your OTP for phone number verification is: ${otp}`,
-      to: phone,
+      to: `+91${phone}`,
       from: '+917038536555',
   })
   .then(message => console.log(message.sid))
