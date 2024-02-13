@@ -11,7 +11,9 @@ const postSchema = new mongoose.Schema({
      user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
      likeCount: {type:Number, default:0},
      commentCount: {type:Number, default:0},
-},{timestamps:true})
+},
+{timestamps:true}
+)
 
 
 const MediaModel = mongoose.model('Media', mediaSchema);
