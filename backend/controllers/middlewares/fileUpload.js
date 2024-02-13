@@ -2,6 +2,7 @@ const multer = require("multer");
 const path = require("path");
 const util = require("util")
 
+// Multer storing
 const storage = multer.diskStorage({
     destination: 'uploads',
     filename: function (req,file,cb){
@@ -22,7 +23,6 @@ function checkFileType(file,cb){
     }
 }
 
-
 const upload = multer({
     storage:storage,
     fileFilter: function(req,file,cb){
@@ -30,10 +30,7 @@ const upload = multer({
     },
 }).array('files',5);
 
-// function uploadMiddleware(req,res,next){
-//     util.promisify(upload);
-//     next()
-// } 
+
 const uploadMiddleware = util.promisify(upload)
 
 module.exports = {
