@@ -22,20 +22,22 @@
     <div class="container">
       <div class="jumbotron">
         <h1 class="text-primary text-center">
-          <span class="fa fa-user"></span> <%= user.provider %> Profile
+          <span class="fa fa-user"></span> Profile Information
         </h1>
         <div class="row">
           <div class="col-sm-6">
             <div class="well">
-             
+              <div>
+                <img src="<%= user.photos[0].value %>" alt="profile" />
+              </div>
               <p>
                 <strong>Id</strong>: <%= user.id %><br />
-                <strong>Name</strong>: <%= user.displayName %><br />
-                <strong>Provider</strong>: <%= user.provider %>
+                <strong>Email</strong>: <%= user.emails[0].value %><br />
+                <strong>Name</strong>: <%= user.displayName %>
               </p>
             </div>
             <div>
-              <a href="/auth/facebook/signout" class="btn btn-danger"
+              <a href="/auth/google/signout" class="btn btn-danger"
                 ><span class="fa fa-user"></span> Sign Out</a
               >
             </div>
