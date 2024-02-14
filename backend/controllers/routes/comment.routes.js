@@ -8,7 +8,7 @@ const {auth} = require("../middlewares/auth")
 commentRouter.post("/add_comment",auth, async(req,res)=>{
   const {post_id,user_id, comment} = req.body
   
-  try{
+  try{ 
     const result = await CommentModel.create(req.body);
     await PostModel.findByIdAndUpdate(
       post_id,{$inc:{commentCount:1}},{new:true}
@@ -16,18 +16,20 @@ commentRouter.post("/add_comment",auth, async(req,res)=>{
     res.status(200).json({msg:"Comment added successfully..", result})
   }
   catch(err){
-    res.status(400).json({msg:"No like"})
+    res.status(400).json({msg:"Comment not added"})
   }
 })
 
 
 // GET ALL POSTS
-commentRouter.get("/postcomment", async(req,res)=>{
-  const {post_id} = req.query
+commentRouter.get("/post_comment", async(req,res)=>{
+  const {post_id,page, limit} = req.query
+  const totalComments = await CommentModel.countDocuments({post_id})
+  console.log(totalComments);
   try{
-    const posts = await PostModel.find({post_id:post_id}).populate({path:"user_id", select:"name"})
+    const comment = await CommentModel.find({post_id})
     
-    res.status(200).json({msg:"All Post", data:posts})
+    res.status(200).json({msg:"All Comment", data:comment})
   }
   catch(err){
     console.log(err);
