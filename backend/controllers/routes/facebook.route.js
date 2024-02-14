@@ -28,15 +28,17 @@ passport.use(
           accountId: profile.id,
           name: profile.displayName,
           email: profile.emails ? profile.emails[0].value : null,
+          
           photoURL: profile.photos ? profile.photos[0].value : defaultimage,
           provider: profile.provider,
-        });
+        });console.log(user.name)
         await user.save();
-        // console.log(user);
+        console.log(user);
         return cb(null, profile);
       } else {
         console.log('Facebook User already exist in DB..');
-        // console.log(profile);
+        console.log(profile.emails[0].value);
+        console.log(profile.photos[0].value)
         return cb(null, profile);
       }
     }
@@ -63,7 +65,10 @@ router.get('/success', async (req, res) => {
     id: req.session.passport.user.id,
     displayName: req.session.passport.user.displayName,
     provider: req.session.passport.user.provider,
+    // Email: req.session.passport.user.email,
+    // console.log(userInfo.Email)
   };
+  
   res.render('fb-github-success', { user: userInfo });
 });
 
