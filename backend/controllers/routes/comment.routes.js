@@ -24,8 +24,11 @@ commentRouter.post("/add_comment",auth, async(req,res)=>{
 // GET ALL POSTS
 commentRouter.get("/post_comment", async(req,res)=>{
   const {post_id,page, limit} = req.query
-  const totalComments = await CommentModel.countDocuments({post_id})
+  const totalComments = await CommentModel.countDocuments({post_id}).populate({path:"user_id", select:"name"}).skip(startIdx).limit(limit).exec()
+
   console.log(totalComments);
+  const totalPages = Math.ceil(totalComments/limit);
+  const startIdx = (page-1) * limit;
   try{
     const comment = await CommentModel.find({post_id})
     
