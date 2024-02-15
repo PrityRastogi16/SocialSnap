@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema(
     phone:{
       type: Number
     },
+    followers: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }]
     // facebookId: {
     //   type: String,
     // },

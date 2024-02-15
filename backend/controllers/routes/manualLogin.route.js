@@ -8,6 +8,7 @@ const cookieparser = require("cookie-parser");
 
 const {generateOtp,sendEmailVerification, sendSMSVerification}=require('../../controllers/middlewares/otpRegistration.middleware');
 const {redisClient}=require('../../controllers/middlewares/redis.middleware');
+const {auth} = require("../middlewares/auth")
 
 const userRouter = express.Router();
 userRouter.use(cookieparser());
@@ -152,6 +153,36 @@ userRouter.get("/logout", async (req, res) => {
     console.log(err)
   }
 });
+
+// Followers-
+userRouter.post('/follow/:user_id',auth,async(req,res)=>{
+  try{
+     const user_id = req.params.user_id;
+     const followerID = req.user._id;
+    //  console.log(followerID);
+    //  console.log(user_id);
+     await User.findByIdAndUpdate(user_id,{$addToSet:{followers:followerID}});
+     res.status(200).json({msg:"User followed Successfull"})
+  }
+  catch(err){
+   console.log(err)
+    res.json({msg:"Failed to follow user"})
+  }
+})
+
+userRouter.post('/unfollow/:user_id',auth,async(req,res)=>{
+  try{
+     const user_id = req.params.user_id;
+     const followerID = req.user._id;
+    
+     await User.findByIdAndUpdate(user_id,{$pull:{followers:followerID}});
+     res.status(200).json({msg:"User unfollowed Successfull"})
+  }
+  catch(err){
+   console.log(err)
+    res.json({msg:"Failed to unfollow user"})
+  }
+})
 
 module.exports = {
   userRouter,
