@@ -1,11 +1,51 @@
+<!-- frontend/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SocialSnap Video Call</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+  <script src="https://cdn.simplewebrtc.com/latest-v3.js"></script>
 </head>
 <body>
-    
+  <h1>SocialSnap Video Call</h1>
+  <div id="localVideo"></div>
+  <div id="remoteVideos"></div>
+
+  <script>
+    const socket = io();
+
+    const webrtc = new SimpleWebRTC({
+      localVideoEl: 'localVideo',
+      remoteVideosEl: 'remoteVideos',
+      autoRequestMedia: true,
+      url: 'http://localhost:3000',
+    });
+
+    webrtc.on('readyToCall', () => {
+      document.getElementById('localVideo').style.display = 'block';
+      // Update 'your-room-name' to a unique room name
+      webrtc.joinRoom('your-room-name');
+    });
+
+    webrtc.on('createdPeer', (peer) => {
+      peer.on('iceCandidate', (candidate) => {
+        socket.emit('ice-candidate', { room: 'your-room-name', candidate });
+      });
+    });
+
+    socket.on('offer', (offer) => {
+      webrtc.handleOffer(offer);
+    });
+
+    socket.on('answer', (answer) => {
+      webrtc.handleAnswer(answer);
+    });
+
+    socket.on('ice-candidate', (candidate) => {
+      webrtc.handleCandidate(candidate);
+    });
+  </script>
 </body>
 </html>
