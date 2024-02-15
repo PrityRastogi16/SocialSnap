@@ -40,7 +40,6 @@ postRouter.get("/all_post", async(req,res)=>{
   const totalPosts = await PostModel.countDocuments({})
   const totalPages = Math.ceil(totalPosts/limit)
   const startIdx = (page-1) * limit
-
   try{
     const posts = await PostModel.aggregate([
     {
