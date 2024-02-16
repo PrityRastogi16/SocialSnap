@@ -34,7 +34,16 @@ const userSchema = new mongoose.Schema(
     followers: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
-    }]
+    }],
+    notifications: [
+      {
+        type: String, // 'follow', 'like', 'comment', etc.
+        sender: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+      },
+    ],
     // facebookId: {
     //   type: String,
     // },
