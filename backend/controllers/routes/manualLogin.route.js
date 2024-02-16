@@ -162,6 +162,11 @@ userRouter.post('/follow/:user_id',auth,async(req,res)=>{
     //  console.log(followerID);
     //  console.log(user_id);
      await User.findByIdAndUpdate(user_id,{$addToSet:{followers:followerID}});
+     const notification = {
+      type: 'follow',
+      sender: followerID,
+    };
+    await User.findByIdAndUpdate(user_id, { $push: { notifications: notification } })
      res.status(200).json({msg:"User followed Successfull"})
   }
   catch(err){
