@@ -169,3 +169,20 @@ postsContent.forEach((post) => {
     }
   }
 });
+
+
+const createPostButton = document.getElementById('createPostButton');
+const overlay = document.getElementById('overlay');
+const modal = document.getElementById('modal');
+
+createPostButton.addEventListener('click', (e) => {
+    e.preventDefault()
+  overlay.style.display = 'block';
+  modal.style.display = 'block';
+});
+
+overlay.addEventListener('click', (e) => {
+    e.preventDefault()
+  overlay.style.display = 'none';
+  modal.style.display = 'none';
+});
