@@ -4,48 +4,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SocialSnap Video Call</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
-  <script src="https://cdn.simplewebrtc.com/latest-v3.js"></script>
+  <title>SocialSnap</title>
+  <link rel="stylesheet" href="./styles/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap" rel="stylesheet">
 </head>
-<body>
-  <h1>SocialSnap Video Call</h1>
-  <div id="localVideo"></div>
-  <div id="remoteVideos"></div>
-
-  <script>
-    const socket = io();
-
-    const webrtc = new SimpleWebRTC({
-      localVideoEl: 'localVideo',
-      remoteVideosEl: 'remoteVideos',
-      autoRequestMedia: true,
-      url: 'http://localhost:3000',
-    });
-
-    webrtc.on('readyToCall', () => {
-      document.getElementById('localVideo').style.display = 'block';
-      // Update 'your-room-name' to a unique room name
-      webrtc.joinRoom('your-room-name');
-    });
-
-    webrtc.on('createdPeer', (peer) => {
-      peer.on('iceCandidate', (candidate) => {
-        socket.emit('ice-candidate', { room: 'your-room-name', candidate });
-      });
-    });
-
-    socket.on('offer', (offer) => {
-      webrtc.handleOffer(offer);
-    });
-
-    socket.on('answer', (answer) => {
-      webrtc.handleAnswer(answer);
-    });
-
-    socket.on('ice-candidate', (candidate) => {
-      webrtc.handleCandidate(candidate);
-    });
-  </script>
+<body>   
+    <!-- D03FA3 -->
+    <div id="main-container">
+      <!-- Right Side -->
+      <div class="right-container">
+          <h1>Welcome to SocialSnap</h1>
+          <p>Chat, post, and video call your friends from wherever you are.</p>
+          <div></div>
+          <button class="btn btn1" id="googleLoginBtn"><i class="fa-brands fa-google"></i><span style="margin-left: 10px;">Login with Google</span></button>
+          <button class="btn btn2" id="facebookLoginBtn"><i class="fa-brands fa-facebook"></i><span style="margin-left: 10px;">Login with Facebook</span></button>
+          <br>
+          <button class="btn3" id="manualLoginBtn"><i class="fa-solid fa-desktop"></i><span style="margin-left: 10px;">Login to Chat</span></button>
+      </div>
+      <!-- Left Side -->
+      <div class="left-container">
+        <img src="./images/myai-asset.png" alt="AI Image">
+      </div>
+    </div>
+    <script src="https://kit.fontawesome.com/82eb4b47e3.js" crossorigin="anonymous"></script>
 </body>
 </html>
