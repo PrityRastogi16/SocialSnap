@@ -159,13 +159,11 @@ userRouter.post('/follow/:user_id',auth,async(req,res)=>{
   try{
      const user_id = req.params.user_id;
      const followerID = req.user._id;
-    //  console.log(followerID);
-    //  console.log(user_id);
      await User.findByIdAndUpdate(user_id,{$addToSet:{followers:followerID}});
-     const notification = {
+     const notification = [{
       type: 'follow',
       sender: followerID,
-     }
+     }]
 
     console.log(notification)
     await User.findByIdAndUpdate(user_id, { $push: { notifications: notification } })

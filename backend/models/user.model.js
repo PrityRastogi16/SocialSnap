@@ -35,15 +35,18 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     }],
-    notifications: [
-      {
-        type: String, // 'follow', 'like', 'comment', etc.
-        sender: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User',
-        },
+    notifications: [{
+      type: {
+        type: String,
+        enum: ['follow', 'like', 'comment'], // Define possible types
+        required: true
       },
-    ],
+      sender: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+      },
+  }],
     // facebookId: {
     //   type: String,
     // },
