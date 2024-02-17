@@ -5,6 +5,7 @@ const base_url = "http://localhost:6420/"
 const postRouter = express.Router();
 const {auth} = require("../middlewares/auth");
 const { default: mongoose } = require("mongoose");
+const { update } = require("../../models/user.model");
 
 // CREATE POST
 postRouter.post("/create_post/:userID", auth,uploadMiddleware, async(req,res)=>{
@@ -88,8 +89,41 @@ postRouter.get("/all_post", async(req,res)=>{
   }
 })
 
-// DELETE POST
 
+// Update Post
+postRouter.put('/update_post/:post_id', auth, async(req,res)=>{
+  const {post_id} = req.params;
+  try{
+     const updatePost  = await PostModel.findByIdAndUpdate(post_id, req.files,{new:true});
+     if(!updatePost){
+      return res.status(400).json({msg:"Post not found!"})
+     }
+     res.status(200).json({msg:"Post Updated !", data:updatePost})
+  }
+  catch(err){
+    console.log(err);
+    res.status(400).json({msg:"Failed to update posts !"})
+  }
+})
+
+
+
+// DELETE POST
+postRouter.delete('/delete_post/:post_id', auth, async(req,res)=>{
+  const {post_id} = req.params;
+  try{
+     const {post_id} = req.params;
+     const deletePost = await PostModel.findByIdAndDelete(post_id);
+     if(!deletePost){
+      return res.status(400).json({msg:"Post not found"})
+     }
+     res.status(200).json({msg:"Post Deleted", data:deletePost});
+  }
+  catch(err){
+    console.log(err);
+    res.status(400).json({msg:"Failed to delete posts !"})
+  }
+})
 
 module.exports = {
     postRouter
