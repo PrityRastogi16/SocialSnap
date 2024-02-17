@@ -5,6 +5,7 @@ const signupBtn = document.querySelector("label.signup");
 const signupLink = document.querySelector(".signup-link a");
 const loginText = document.querySelector(".titleText .login");
 const signupText = document.querySelector(".titleText .signup");
+const invalidspan = document.getElementById("invalid-text");
 
 signupBtn.onclick = () => {
   loginForm.style.marginLeft = "-50%";
@@ -42,13 +43,16 @@ sendOtpButton.addEventListener("click", async function () {
     const data = await response.json();
 
     if (response.ok) {
-      alert(data.msg); // Show success message
+      invalidspan.innerHTML=`${data.msg}`; // Show success message
+      invalidspan.style.color = "green"
     } else {
-      alert(data.msg); // Show error message
+      invalidspan.innerHTML=`${data.msg}`; // Show error message
+      invalidspan.style.color = "red"
     }
   } catch (error) {
     console.error("Error:", error);
-    alert("An error occurred while sending OTP.");
+    
+    invalidspan.innerHTML= "Something went wrong !";
   }
 });
 
@@ -59,6 +63,7 @@ async function registerUser() {
   const password_input = document.getElementById("sign-up-password");
   const email_input = document.getElementById("sign-up-email");
   const otp_input = document.getElementById("sign-up-otp");
+  
   //getting values
   const username = username_input.value;
   const password = password_input.value;
@@ -77,26 +82,30 @@ async function registerUser() {
       const data = await response.json();
 
       if (response.ok) {
-        alert(data.msg); // Show success message
+        invalidspan.innerHTML=`${data.msg}`; // Show success message
+      invalidspan.style.color = "green"
       } else {
-        alert(data.msg);
-        checkCredentials("Invalid Otp or Password"); // Show error message
+        invalidspan.innerHTML=`${data.msg}`; // Show success message
+         invalidspan.style.color = "red"
+        // checkCredentials("Invalid Otp or Password"); // Show error message
       }
     } else {
-      alert("Enter your details");
+      invalidspan.innerHTML= "Enter Your Details"
+      invalidspan.style.color = "red";
     }
   } catch (error) {
     console.error("Error:", error);
-    alert("An error occurred while Registering.");
+    invalidspan.innerHTML= "Something went wrong"; // Show success message
+    invalidspan.style.color = "red"
   }
 }
 /// function to handle Invalid credentials
-async function checkCredentials(message) {
-  const invalidspan = document.getElementById("invalid-text");
-  const invaliddiv = document.getElementById("invalid");
-  invalidspan.innerHTML = message;
-  invaliddiv.classList.remove("invalid-invisible");
-  setTimeout(() => {
-    invaliddiv.classList.add("invalid-invisible");
-  }, 1500);
-}
+// async function checkCredentials(message) {
+//   const invalidspan = document.getElementById("invalid-text");
+//   const invaliddiv = document.getElementById("invalid");
+//   invalidspan.innerHTML = message;
+//   invaliddiv.classList.remove("invalid-invisible");
+//   setTimeout(() => {
+//     invaliddiv.classList.add("invalid-invisible");
+//   }, 1500);
+// }

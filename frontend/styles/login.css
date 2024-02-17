@@ -62,6 +62,10 @@ html,body{
     width: 100%;
     overflow: hidden;
 }
+.invalid{
+    margin-left: 21%;
+    margin-top: 5%;
+}
 .form-container .slide-controls{
     position: relative;
     display: flex;
