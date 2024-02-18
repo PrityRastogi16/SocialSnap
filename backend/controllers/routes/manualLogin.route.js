@@ -40,6 +40,7 @@ userRouter.post("/register", async (req, res) => {
       if (email || username) {
         const existEmailUser = await User.findOne({ email });
         const existnameUser = await User.findOne({ username });
+        console.log(existnameUser)
         if (existEmailUser) {
           return res.status(400).json({ msg: "Email already exists" });
         }
@@ -99,7 +100,7 @@ userRouter.post("/login", async (req, res) => {
     if (user) {
       bcrypt.compare(password, user.password, (err, result) => {
         if (err) {
-          res.status(200).json({ msg: "User does not exist!!!" });
+          res.status(400).json({ msg: "User does not exist!!!" });
         }
         if (result) {
           const access_token = jwt.sign(
@@ -123,11 +124,11 @@ userRouter.post("/login", async (req, res) => {
             refresh_token,
           });
         } else {
-          res.status(200).json({ msg: "Incorrect password!" });
+          res.status(400).json({ msg: "Incorrect password!" });
         }
       });
     } else {
-      res.status(200).json({ msg: "User does not exist!!!" });
+      res.status(400).json({ msg: "User does not exist!!!" });
     }
   } catch (err) {
     res.status(400).json({ error: err.message });
