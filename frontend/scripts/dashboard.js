@@ -256,63 +256,56 @@ document.getElementById("postBtn").addEventListener("click", async function(even
 // GET POST:
 // Fetch posts data from backend
 fetch('http://localhost:6420/posts/all_post')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
+  .then(response => response.json())
   .then(data => {
-    if (!Array.isArray(data)) {
-      throw new Error('Response data is not an array');
-    }
-
+    // Assuming 'data' is an array of post objects
+    console.log(data);
     const postsContainer = document.querySelector('.posts');
 
+    // Iterate over each post
     data.forEach(post => {
       fetch(`http://localhost:6420/users/${post.user_id}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(userData => {
-          const userName = userData.name || 'Unknown User';
+      // Create post element
+      .then(response => response.json())
+      .then(userData => {
+        // Assuming userData contains user details like name
+        const userName = userData.name;
 
-          const postElement = document.createElement('article');
-          postElement.classList.add('post');
+        // Create post element
+        const postElement = document.createElement('article');
+        postElement.classList.add('post');
 
-          postElement.innerHTML = `
-            <div class="post__header">
-              <div class="post__profile">
-                <a href="${userData.imageURL || '#'}" target="_blank" class="post__avatar">
-                  <img src="${userData.imageURL || '../images/default-user.png'}" alt="User Picture" />
-                </a>
-                <a href="${userData.photoURL || '#'}" target="_blank" class="post__user">${userName}</a>
-              </div>
-              <!-- Add other elements dynamically -->
+        // Construct post HTML dynamically
+        postElement.innerHTML = `
+          <div class="post__header">
+            <div class="post__profile">
+              <a href="${userData.imageURL || '#'}" target="_blank" class="post__avatar">
+                <img src="${userData.imageURL || '../images/default-user.png'}" alt="User Picture" />
+              </a>
+              <a href="${userData.photoURL || '#'}" target="_blank" class="post__user">${userName}</a>
             </div>
-            <div class="post__content">
-              <div class="post__medias">
-                <img class="post__media" src="${post.media[0].imageURL || '../images/insta-clone.png'}" alt="Post Content" />
-              </div>
+            <!-- Add other elements dynamically -->
+          </div>
+          <div class="post__content">
+            <div class="post__medias">
+              <img class="post__media" src="${post.media[0].imageURL || '../images/insta-clone.png'}" alt="Post Content" />
             </div>
-            <div class="post__footer">
-              <!-- Add footer elements dynamically -->
-            </div>
-          `;
+          </div>
+          <div class="post__footer">
+            <!-- Add footer elements dynamically -->
+          </div>
+        `;
 
-          postsContainer.appendChild(postElement);
-        })
-        .catch(error => {
-          console.error('Error fetching user details:', error);
-          alert("ERROR")
-        });
-    });
-  })
-  .catch(error => {
-    console.log(error)
-    alert("ERROR",)
+        // Append post element to container
+        postsContainer.appendChild(postElement);
+      })
+      .catch(error => {
+        console.error('Error fetching user details:', error);
+        alert("ERROR")
+      });
   });
-
+})
+.catch(error => {
+  console.error('Error fetching posts:', error);
+  alert("ERROR")
+});
