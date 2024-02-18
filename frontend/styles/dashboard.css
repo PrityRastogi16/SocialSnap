@@ -415,25 +415,113 @@ img {
   border-radius: 50%;
 }
 /* FORM */
-.overlay {
+/* .overlay {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
+    background-color: rgba(0, 0, 0, 0.8);
+  } */
   
-  .modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
+
+/* CSS */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 60%;
+  width: 30%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1000;
+}
+
+.modal h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  align-items: center;
+}
+
+#postForm {
+  text-align: center;
+  margin-top: 20%;
+}
+
+#fileInput {
+  display: none;
+}
+
+#fileLabel {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#fileLabel:hover {
+  background-color: #45a049;
+}
+
+.desc {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
+/* #previewContainer {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+} */
+
+.preview {
+  max-width: 100px; /* Adjust as needed */
+  max-height: 100px; /* Adjust as needed */
+  margin-right: 10px; /* Adjust as needed */
+  margin-bottom: 10px; /* Adjust as needed */
+  object-fit: cover; /* Ensure images/videos fit within the specified dimensions */
+  border-radius: 5px; /* Add some rounded corners */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+#postBtn {
+  margin-top: 20px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#postBtn:hover {
+  background-color: #45a049;
+}
+
+  /* .desc,.postbtn{
+    margin-top: 5%;
   }
   
   .dark-mode .modal {
@@ -444,7 +532,7 @@ img {
   .dark-mode .modal textarea,
   .dark-mode .modal button {
     color: white;
-  }
+  } */
 /* FORM */
 .post__user {
   font-size: 14px;

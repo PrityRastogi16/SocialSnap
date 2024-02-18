@@ -1,15 +1,17 @@
 const multer = require("multer");
 const path = require("path");
 const util = require("util")
+const bucket = require("./firebase.config")
 
 // Multer storing
-const storage = multer.diskStorage({
-    destination: 'uploads',
-    filename: function (req,file,cb){
-        console.log(req.body.user_id)
-        cb(null, file.fieldname+'-'+Date.now()+path.extname(file.originalname));
-    }
-})
+// const storage = multer.diskStorage({
+//     destination: 'uploads',
+//     filename: function (req,file,cb){
+//         console.log(req.body.user_id)
+//         cb(null, file.fieldname+'-'+Date.now()+path.extname(file.originalname));
+//     }
+// })
+const storage = multer.memoryStorage();
 
 function checkFileType(file,cb){
     const filetypes = /jpeg|jpg|png|gif|mp4|mov/;

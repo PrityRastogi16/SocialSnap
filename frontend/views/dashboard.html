@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/favicon.svg" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="../styles/dashboard.css" />
-    <script src="../scripts/dashboard.js"></script>
+    
   </head>
 
   <body>
@@ -67,7 +67,7 @@
         </div>
 
         <div class="header__buttons header__buttons--mobile">
-          <a href="#">
+          <a href="#" id="createPostButtonInMobile">
             <svg
               width="24"
               height="24"
@@ -180,7 +180,7 @@
           </a>
               
               <!-- 33333333333333333333333 -->
-              <a href="#" id="createPostButton">
+              <a id="createPostButton">
                 <svg
                   width="24"
                   height="24"
@@ -214,13 +214,18 @@
               </a>
               <!-- FORM -->
               <div class="overlay" id="overlay"></div>
-              <div class="modal" id="modal">
-                <form action="#" method="post">
-                  <input type="file" name="files" id="fileInput">
-                  <textarea name="description" id="description" placeholder="Enter your description"></textarea>
-                  <button type="submit">Post</button>
-                </form>
-              </div>
+      <div class="modal" id="modal">
+         <h2>Create New Post</h2>
+         <hr>
+            <div id="postForm">
+          <label for="fileInput" id="fileLabel">Select from Computer</label>
+             <input type="file" name="files" id="fileInput" multiple>
+    <div id="previewContainer"></div>
+    <textarea name="description" id="description" placeholder="Enter your description" class="desc"></textarea>
+    <br>
+    <button type="submit" class="postbtn" id="postBtn">Post</button>
+  </div>
+</div>
 
           <!-- FORM -->
               
@@ -610,5 +615,6 @@
         </div>
       </button>
     </nav>
+    <script src="../scripts/dashboard.js"></script>
   </body>
 </html>
