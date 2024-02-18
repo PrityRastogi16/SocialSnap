@@ -189,6 +189,27 @@ userRouter.post('/unfollow/:user_id',auth,async(req,res)=>{
   }
 })
 
+
+// Get USER DETAILS
+userRouter.get('/:user_id', async (req, res) => {
+  const userId = req.params.user_id;
+
+  try {
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // If user found, send user details in the response
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 module.exports = {
   userRouter,
 };
