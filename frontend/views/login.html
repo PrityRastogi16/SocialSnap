@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../styles/login.css">
 </head>
 <body>
+    
     <section class="wrapper">
         <div class="titleText">
             <div class="title login">Login</div>
@@ -24,18 +25,21 @@
             <div class="form-inner">
                 <form action="#" class="login">
                     <div class="field">
-                        <input type="text" placeholder="Enter Email or username" required>
+                        <input id="log-in-username" type="text" placeholder="Enter Email or username" required>
                     </div>
                     <div class="field">
-                        <input type="password" placeholder="Enter password" required>
+                        <input id="log-in-password" type="password" placeholder="Enter password" required>
                     </div>
                     <div class="pass-link">
                         <a href="#">Forgot password?</a>
                     </div>
-                    <div class="field">
+                    <div id="log-in-btn" class="field">
                         <input type="submit" value="Login">
                     </div>
                     <div class="signup-link">Not a member? <a href="#">Signup now</a></div>
+                    <div style="justify-content: center; text-align: center; padding-top: 20px;" id="invalid" class="invalid-invisible">
+                        <span id="invalid-text"></span>
+                      </div>
                 </form>
                 <form action="#" class="signup">
                     <div class="field">
@@ -57,12 +61,11 @@
                     <div class="field">
                         <input id="register_btn" type="submit" value="Signup">
                     </div>
+                    <div style="justify-content: center; text-align: center; padding-top: 20px;" id="invalid1" class="invalid1-invisible">
+                        <span id="invalid1-text"></span>
+                      </div>
                 </form>
-                
             </div>
-            <!-- <div id="invalid" class="invalid-invisible"> -->
-                <span class="invalid"  id="invalid-text"></span>
-                <!-- </div> -->
         </div>
     </section>
     <script src="../scripts/login.js"></script>
